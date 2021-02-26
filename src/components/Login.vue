@@ -53,12 +53,10 @@ export default {
       this.$message.error('用户名或密码错误');
     },
     loginBtnClick(){
-      console.log('login')
       this.$refs.loginFormRef.validate(valid => {
         if (valid){
           const formData = this.loginForm
-          loginRequest('/data',formData).then(res =>{
-            console.log(res)
+          loginRequest('/login',formData).then(res =>{
             if (res.data.code === 200){
               const sessionToken = res.data.data.token
               window.sessionStorage.setItem("token",sessionToken)

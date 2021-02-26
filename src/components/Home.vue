@@ -5,7 +5,7 @@
         <p>home 组件</p>
       </el-header>
       <el-main>
-        <el-button type="info" @click="logoutBtnClick">退出</el-button>
+        <exit-btn></exit-btn>
         <el-button type="primary" @click="workspaceBtnClick">测试用例生成工作区</el-button>
       </el-main>
     </el-container>
@@ -13,16 +13,16 @@
 </template>
 
 <script>
+import ExitBtn from "@/components/baseUtils/ExitBtn";
 export default {
   name: "Home",
   methods:{
-    logoutBtnClick(){
-      window.sessionStorage.clear()
-      this.$router.replace('/login')
-    },
     workspaceBtnClick(){
-      this.$router.replace('/workspace')
+      this.$router.push('/workspace')
     }
+  },
+  components:{
+    ExitBtn
   }
 }
 </script>

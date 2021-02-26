@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router'
 import Login from "@/components/Login";
 import Home from "@/components/Home";
 import AutomaticGenerationWorkspace from "@/components/AutomaticGenerationWorkspace";
+import NewCase from "@/components/baseUtils/NewCase";
 
 const routes = [
   {
@@ -18,7 +19,10 @@ const routes = [
   },
   {
     path:'/workspace',
-    component: AutomaticGenerationWorkspace
+    component: AutomaticGenerationWorkspace,
+    children:[
+      {path:'/newcase',component:NewCase}
+    ]
   }
 ]
 
