@@ -6,21 +6,150 @@
       <el-breadcrumb-item>自定义用例</el-breadcrumb-item>
       <el-breadcrumb-item>添加</el-breadcrumb-item>
     </el-breadcrumb>
-<!--    卡片区域-->
-    <el-card>
-      <div slot="header" class="clearfix">
-        <span>卡片名称</span>
-      </div>
-    </el-card>
+    <div class="new-case-form-div">
+      <el-form size="small" :model="newCaseForm" ref="newCaseFormRef" label-width="80px" class="new-case-form">
+        <span>测试描述</span>
+        <el-form-item prop="func_desc" label="功能描述">
+          <el-input v-model="newCaseForm.title.func_desc"></el-input>
+        </el-form-item>
+        <el-form-item prop="input_param" label="输入参数">
+          <el-input v-model="newCaseForm.title.input_param"></el-input>
+        </el-form-item>
+        <el-form-item prop="adjudge_param" label="判读参数">
+          <el-input v-model="newCaseForm.title.adjudge_param"></el-input>
+        </el-form-item>
+        <span>步骤列表</span>
+        <div v-for="(one_step,step_index) in newCaseForm['step_list']">
+          <div style="border: 1px solid #000000">
+            <span>步骤 {{step_index+1}}</span>
+            <div>
+              <el-form-item prop="step" label="步骤描述">
+                <el-input v-model="one_step.step"></el-input>
+              </el-form-item>
+              <el-form-item prop="ex_res" label="期望结果">
+                <el-input v-model="one_step.ex_res"></el-input>
+              </el-form-item>
+              <el-row justify="space-between">
+                <el-col :span="10">
+                  <el-form-item prop="instr_type" label="指令类型">
+                    <el-input v-model="one_step.code.instr_type"></el-input>
+                  </el-form-item>
+                </el-col>
+                <el-col :span="10">
+                  <el-form-item prop="equip_name" label="设备名称">
+                    <el-input v-model="one_step.code.instr_param.equip_name"></el-input>
+                  </el-form-item>
+                </el-col>
+              </el-row>
+              <div v-for="(one_param_item,param_index) in one_step.code.instr_param.param_list">
+                <el-row justify="space-between">
+                  <el-col :span="10">
+                    <el-form-item prop="param_name" label="参数名称">
+                      <el-input v-model="one_param_item.param_name"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="10">
+                    <el-form-item prop="param_name" label="参数值">
+                      <el-input v-model="one_param_item.param_value"></el-input>
+                    </el-form-item>
+                  </el-col>
+                  <el-col :span="4">
+                    <el-button @click="removeParam(step_index,param_index)">删除参数</el-button>
+                  </el-col>
+                </el-row>
+              </div>
+              <el-form-item>
+                <el-button @click="addParamPair(step_index)">添加测试参数</el-button>
+                <el-button @click="removeStep(step_index)">删除步骤</el-button>
+              </el-form-item>
+            </div>
+          </div>
+        </div>
+        <el-form-item>
+          <el-button @click="addStep">添加测试步骤</el-button>
+        </el-form-item>
+      </el-form>
+    </div>
   </div>
 </template>
 
 <script>
 export default {
-  name: "NewCase"
+  name: "NewCase",
+  data(){
+    return {
+      newCaseForm:{
+        "title": {
+            "func_desc": "普通回路热控阈值初始化处理测试",
+            "input_param": "锂电池热控回路编号，阳照区、阴影区状态",
+            "adjudge_param": "回路n温度阈值上限，回路n温度阈值下限"
+        },
+        "step_list": [
+            {
+                "step": "程序运行在正常模式下",
+                "ex_res": "遥测程序运行在正常在轨模式下",
+                "code": {
+                    "instr_type": "SETP",
+                    "instr_param": {
+                        "equip_name": "program",
+                        "param_list": [
+                            {
+                                "param_name": "mode",
+                                "param_value": "normal"
+                            }
+                        ]
+                    }
+                }
+            },
+        ]
+      }
+    }
+  },
+  methods:{
+    removeParam(step_index,param_index){
+      this.newCaseForm.step_list[step_index].code.instr_param.param_list.splice(param_index,1)
+    },
+    removeStep(step_index){
+      this.newCaseForm.step_list.splice(step_index,1)
+    },
+    addParamPair(step_index){
+      console.log(step_index)
+      // console.log(this.newCaseForm.step_list[step_index].code.instr_param)
+      this.newCaseForm.step_list[step_index].code.instr_param.param_list.push({ "param_name": "", "param_value": "" })
+    },
+    addStep(){
+      this.newCaseForm.step_list.push({
+                "step": "",
+                "ex_res": "",
+                "code": {
+                    "instr_type": "",
+                    "instr_param": {
+                        "equip_name": "",
+                        "param_list": [
+                            {
+                                "param_name": "",
+                                "param_value": ""
+                            }
+                        ]
+                    }
+                }
+            })
+    }
+  }
 }
 </script>
 
 <style lang="less" scoped>
-
+  .new-case-form-div{
+    margin: 10%;
+    margin-top: 5%;
+    padding: 5%;
+    background-color: #FFFFFF;
+    border-radius: 5px;
+    height: 430px;
+    overflow-y: auto;
+    span{
+      margin: 10%;
+    }
+  }
 </style>

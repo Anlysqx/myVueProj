@@ -92,7 +92,8 @@ export default {
       testCaseList:['用例1','用例2','用例3','用例4'],
       name:'anlysqx',
       iscollapseToggle:false,
-      activePath:''
+      activePath:'',
+      isShowResultDetail:false
     }
   },
   created() {
@@ -151,6 +152,7 @@ export default {
   }
   .container-style{
     height: 100%;
+    overflow-y: hidden;
   }
   .el-header{
     background-color: #273865;

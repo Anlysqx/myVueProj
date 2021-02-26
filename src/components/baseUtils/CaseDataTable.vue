@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="case-data-table-style">
     <el-collapse :v-model="tableData" @change="handleChange">
       <el-collapse-item name="1">
         <template v-slot:title>
@@ -58,11 +58,6 @@
 <script>
   export default {
     name: "CaseDataTable",
-    methods:{
-      handleChange(){
-
-      }
-    },
     data(){
       return {
         tableData:{
@@ -127,11 +122,23 @@
     ]
 }
       }
+    },
+    methods:{
+      handleChange(){
+
+      },
+      changeData(newData){
+        this.tableData = newData
+      }
     }
   }
 </script>
 
 <style lang="less" scoped>
+  .case-data-table-style{
+    height: 600px;
+    overflow-y: auto;
+  }
   .content_style{
     background-color: #d0d0d0;
     padding: 5%;
