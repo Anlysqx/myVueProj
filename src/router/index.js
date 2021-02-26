@@ -1,6 +1,7 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from "@/components/Login";
 import Home from "@/components/Home";
+import AutomaticGenerationWorkspace from "@/components/AutomaticGenerationWorkspace";
 
 const routes = [
   {
@@ -14,6 +15,10 @@ const routes = [
   {
     path:'/home',
     component: Home
+  },
+  {
+    path:'/workspace',
+    component: AutomaticGenerationWorkspace
   }
 ]
 
