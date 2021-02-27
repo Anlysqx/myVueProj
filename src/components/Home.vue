@@ -11,16 +11,16 @@
       <el-main>
         <el-row type="flex" justify="center" class="home-nav-style">
           <el-col :span="4">
-            <el-button type="primary" @click="workspaceBtnClick">测试用例生成工作区</el-button>
+            <el-button type="primary" @click="workspaceBtnClick">测试用例数据库</el-button>
           </el-col>
           <el-col :span="4">
             <el-button type="success" @click="workspaceBtnClick">测试用例生成工作区</el-button>
           </el-col>
           <el-col :span="4">
-            <el-button type="info" @click="workspaceBtnClick">测试用例生成工作区</el-button>
+            <el-button type="info" @click="workspaceBtnClick">算法模型库</el-button>
           </el-col>
           <el-col :span="4">
-            <el-button type="warning" @click="workspaceBtnClick">测试用例生成工作区</el-button>
+            <el-button type="warning" @click="workspaceBtnClick">模型运行统计</el-button>
           </el-col>
         </el-row>
       </el-main>

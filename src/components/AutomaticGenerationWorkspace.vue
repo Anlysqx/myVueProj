@@ -74,6 +74,12 @@
                 <span>功能组件</span>
               </template>
 <!--              二级菜单-->
+              <el-menu-item index="/usecase_search" @click.native="useCaseSearchClick">
+                <template v-slot:title>
+                  <i class="el-icon-search"></i>
+                  <span>用例搜索</span>
+                </template>
+              </el-menu-item>
               <el-menu-item index="/info_classify" @click.native="classifyClick">
                 <template v-slot:title>
                   <i class="el-icon-menu"></i>
@@ -111,7 +117,8 @@
           <router-view></router-view>
         </el-main>
         <el-aside width="200px">
-          <case-data-table></case-data-table>
+          <use-instructions v-if="isShowUseInstruction"></use-instructions>
+          <case-data-table v-else></case-data-table>
         </el-aside>
       </el-container>
     </el-container>
@@ -121,6 +128,7 @@
 import ExitBtn from "@/components/baseUtils/ExitBtn";
 import { getLeftMenuItemListData } from "@/network/network_request";
 import CaseDataTable from "@/components/baseUtils/CaseDataTable";
+import UseInstructions from "@/components/baseUtils/UseInstructions";
 
 export default {
   name: "AutomaticGenerationWorkspace",
@@ -131,20 +139,24 @@ export default {
       name:'anlysqx',
       iscollapseToggle:false,
       activePath:'',
-      isShowResultDetail:false
+      isShowUseInstruction:true
     }
   },
   created() {
     this.getLeftMenuList()
     this.activePath = window.sessionStorage.getItem("activePath")
     if (!this.activePath){
-      this.activePath = '/newcase'
+      this.activePath = '/usecase_search'
     }
   },
   methods:{
     saveActivePath(path){
       this.activePath = path
       window.sessionStorage.setItem("activePath",path)
+    },
+    useCaseSearchClick(){
+      this.saveActivePath('/usecase_search')
+      this.$router.replace('/usecase_search')
     },
     classifyClick(){
       this.saveActivePath('/info_classify')
@@ -190,7 +202,8 @@ export default {
   },
   components:{
     ExitBtn,
-    CaseDataTable
+    CaseDataTable,
+    UseInstructions
   }
 }
 </script>
