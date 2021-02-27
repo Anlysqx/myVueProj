@@ -1,7 +1,7 @@
 <template>
     <el-container class="container-style">
       <el-header>
-        <div>
+        <div @click="headerClick">
             <img class="header-left-style" src="../assets/good1.jpeg" alt="">
             <span>工作台</span>
         </div>
@@ -150,6 +150,9 @@ export default {
     }
   },
   methods:{
+    headerClick(){
+      this.$router.replace('/home')
+    },
     saveActivePath(path){
       this.activePath = path
       window.sessionStorage.setItem("activePath",path)

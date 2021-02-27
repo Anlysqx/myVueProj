@@ -1,13 +1,16 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import Login from "@/components/Login";
 import Home from "@/components/Home";
-import AutomaticGenerationWorkspace from "@/components/AutomaticGenerationWorkspace";
 import NewCase from "@/components/baseUtils/NewCase";
 import ClassifyComponent from "@/components/functionalComponents/ClassifyComponent";
 import InfoExtractComponent from "@/components/functionalComponents/InfoExtractComponent";
 import CodeGenerationComponent from "@/components/functionalComponents/CodeGenerationComponent";
 import GenerFlowComponent from "@/components/functionalComponents/GenerFlowComponent";
 import UseCaseSearch from "@/components/functionalComponents/UseCaseSearch";
+import AutomaticGenerationWorkspace from "@/components/AutomaticGenerationWorkspace";
+import AlgorithmModelBase from "@/components/AlgorithmModelBase";
+import ResultAnalysisAndTreatment from "@/components/ResultAnalysisAndTreatment";
+import TestCaseDataBase from "@/components/TestCaseDataBase";
 
 const routes = [
   {
@@ -21,6 +24,18 @@ const routes = [
   {
     path:'/home',
     component: Home
+  },
+   {
+    path:'/algorithmModelBase',
+    component: AlgorithmModelBase
+  },
+    {
+    path:'/testCaseDataBase',
+    component: TestCaseDataBase
+  },
+    {
+    path:'/resultAnalysisAndTreatment',
+    component: ResultAnalysisAndTreatment
   },
   {
     path:'/workspace',

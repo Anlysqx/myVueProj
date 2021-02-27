@@ -11,16 +11,16 @@
       <el-main>
         <el-row type="flex" justify="center" class="home-nav-style">
           <el-col :span="4">
-            <el-button type="primary" @click="workspaceBtnClick">测试用例数据库</el-button>
+            <el-button type="primary" @click="testCaseDataBaseBtnClick">测试用例数据库</el-button>
           </el-col>
           <el-col :span="4">
             <el-button type="success" @click="workspaceBtnClick">测试用例生成工作区</el-button>
           </el-col>
           <el-col :span="4">
-            <el-button type="info" @click="workspaceBtnClick">算法模型库</el-button>
+            <el-button type="info" @click="algorithmModelBaseBtnClick">算法模型库</el-button>
           </el-col>
           <el-col :span="4">
-            <el-button type="warning" @click="workspaceBtnClick">模型运行统计</el-button>
+            <el-button type="warning" @click="resultAnalysisAndTreatmentBtnClick">模型运行统计</el-button>
           </el-col>
         </el-row>
       </el-main>
@@ -33,6 +33,15 @@ import ExitBtn from "@/components/baseUtils/ExitBtn";
 export default {
   name: "Home",
   methods:{
+    resultAnalysisAndTreatmentBtnClick(){
+      this.$router.push('/resultAnalysisAndTreatment')
+    },
+    algorithmModelBaseBtnClick(){
+      this.$router.push('/algorithmModelBase')
+    },
+    testCaseDataBaseBtnClick(){
+      this.$router.push('/testCaseDataBase')
+    },
     workspaceBtnClick(){
       this.$router.push('/workspace')
     }
@@ -48,7 +57,7 @@ export default {
     margin-top: 11%;
   }
   .header-left-style{
-    width: 5%;
+    width: 4.2%;
     height: 3%;
     border-radius: 50%;
   }
@@ -56,7 +65,7 @@ export default {
     height: 100%;
     overflow-y: hidden;
   }
-  .el-header {
+  .el-header{
     background-color: #273865;
     color: white;
     border-radius: 2px;
@@ -65,11 +74,9 @@ export default {
     padding-left: 0;
     align-items: center;
     font-size: 20px;
-
-    > div {
+    >div{
       display: flex;
       align-items: center;
-
       span {
         margin-left: 15px;
       }
