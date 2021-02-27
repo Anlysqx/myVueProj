@@ -3,25 +3,25 @@
 <!--    面包屑导航区-->
     <el-breadcrumb separator-class="el-icon-arrow-right">
       <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item>自定义用例</el-breadcrumb-item>
-      <el-breadcrumb-item>添加</el-breadcrumb-item>
+      <el-breadcrumb-item :to="{ path: '/workspace' }">工作台</el-breadcrumb-item>
+      <el-breadcrumb-item>添加用例</el-breadcrumb-item>
     </el-breadcrumb>
     <div class="new-case-form-div">
-      <el-form size="small" :model="newCaseForm" ref="newCaseFormRef" label-width="80px" class="new-case-form">
-        <span>测试描述</span>
-        <el-form-item prop="func_desc" label="功能描述">
-          <el-input v-model="newCaseForm.title.func_desc"></el-input>
-        </el-form-item>
-        <el-form-item prop="input_param" label="输入参数">
-          <el-input v-model="newCaseForm.title.input_param"></el-input>
-        </el-form-item>
-        <el-form-item prop="adjudge_param" label="判读参数">
-          <el-input v-model="newCaseForm.title.adjudge_param"></el-input>
-        </el-form-item>
-        <span>步骤列表</span>
+      <el-form ref="newCaseFormRef" size="small" :model="newCaseForm" label-width="80px" class="new-case-form">
+        <div class="title-style">
+          <el-form-item prop="func_desc" label="功能描述">
+            <el-input v-model="newCaseForm.title.func_desc"></el-input>
+          </el-form-item>
+          <el-form-item prop="input_param" label="输入参数">
+            <el-input v-model="newCaseForm.title.input_param"></el-input>
+          </el-form-item>
+          <el-form-item prop="adjudge_param" label="判读参数">
+            <el-input v-model="newCaseForm.title.adjudge_param"></el-input>
+          </el-form-item>
+        </div>
         <div v-for="(one_step,step_index) in newCaseForm['step_list']">
-          <div style="border: 1px solid #000000">
-            <span>步骤 {{step_index+1}}</span>
+          <div class="one-step-style">
+<!--            <span>步骤 {{step_index+1}}</span>-->
             <div>
               <el-form-item prop="step" label="步骤描述">
                 <el-input v-model="one_step.step"></el-input>
@@ -42,31 +42,39 @@
                 </el-col>
               </el-row>
               <div v-for="(one_param_item,param_index) in one_step.code.instr_param.param_list">
-                <el-row justify="space-between">
-                  <el-col :span="10">
-                    <el-form-item prop="param_name" label="参数名称">
-                      <el-input v-model="one_param_item.param_name"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="10">
-                    <el-form-item prop="param_name" label="参数值">
-                      <el-input v-model="one_param_item.param_value"></el-input>
-                    </el-form-item>
-                  </el-col>
-                  <el-col :span="4">
-                    <el-button @click="removeParam(step_index,param_index)">删除参数</el-button>
-                  </el-col>
+                <el-row :gutter="30" type="flex" justify="space-around">
+                    <el-col :span="10">
+                      <el-form-item prop="param_name" label="参数名称">
+                        <el-input v-model="one_param_item.param_name"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="10">
+                      <el-form-item prop="param_name" label="参数值">
+                        <el-input v-model="one_param_item.param_value"></el-input>
+                      </el-form-item>
+                    </el-col>
+                    <el-col :span="4">
+                      <el-button @click="removeParam(step_index,param_index)" type="danger" icon="el-icon-delete" circle></el-button>
+                    </el-col>
                 </el-row>
               </div>
-              <el-form-item>
-                <el-button @click="addParamPair(step_index)">添加测试参数</el-button>
-                <el-button @click="removeStep(step_index)">删除步骤</el-button>
-              </el-form-item>
+              <el-row type="flex" justify="center">
+                <el-form-item>
+                  <el-button type="info" plain icon="el-icon-plus" circle @click="addParamPair(step_index)"></el-button>
+                </el-form-item>
+              </el-row>
+              <el-row class="step-add-style" type="flex" justify="center">
+                <el-form-item>
+                  <el-button @click="removeStep(step_index)"><i class="el-icon-minus"></i></el-button>
+                  <el-button @click="addStep"><i class="el-icon-plus"></i></el-button>
+                </el-form-item>
+              </el-row>
             </div>
           </div>
         </div>
-        <el-form-item>
-          <el-button @click="addStep">添加测试步骤</el-button>
+        <el-form-item class="form-action-btn">
+          <el-button type="success" @click="saveBtnClick">保存</el-button>
+          <el-button type="info" @click.native="resetBtnClick">重置</el-button>
         </el-form-item>
       </el-form>
     </div>
@@ -106,6 +114,12 @@ export default {
     }
   },
   methods:{
+    //表单重置是对校验结果的重置
+    resetBtnClick(){
+      console.log('reset')
+      console.log(this.$refs.newCaseFormRef)
+      this.$refs.newCaseFormRef.resetFields()
+    },
     removeParam(step_index,param_index){
       this.newCaseForm.step_list[step_index].code.instr_param.param_list.splice(param_index,1)
     },
@@ -140,6 +154,31 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .title-style{
+    padding: 15px;
+    background-color: #f5faf2;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    :hover{
+      font-weight: bolder;
+    }
+  }
+  .one-step-style{
+    background-color: #fcf9f9;
+    padding: 15px;
+    margin: 3px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
+    :hover{
+      font-weight: bold;
+    }
+  }
+  .step-add-style{
+    margin-top: 20px;
+  }
+  .form-action-btn{
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 3px;
+  }
   .new-case-form-div{
     margin: 10%;
     margin-top: 5%;
