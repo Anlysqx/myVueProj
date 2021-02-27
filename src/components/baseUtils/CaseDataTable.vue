@@ -61,67 +61,7 @@
     name: "CaseDataTable",
     data(){
       return {
-        tableData:{
-    "title": {
-        "func_desc": "普通回路热控阈值初始化处理测试",
-        "input_param": "锂电池热控回路编号，阳照区、阴影区状态",
-        "adjudge_param": "回路n温度阈值上限，回路n温度阈值下限"
-    },
-    "step_list": [
-        {
-            "step": "程序运行在正常模式下",
-            "ex_res": "遥测程序运行在正常在轨模式下",
-            "code": {
-                "instr_type": "SETP",
-                "instr_param": {
-                    "equip_name": "program",
-                    "param_list": [
-                        {
-                            "param_name": "mode",
-                            "param_value": "normal"
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "step": "发送指令设置热控回路n在阳照区下",
-            "ex_res": "锂电池热控回路n转为阳照区",
-            "code": {
-                "instr_type": "SETP",
-                "instr_param": {
-                    "equip_name": "锂电池热控回路n",
-                    "param_list": [
-                        {
-                            "param_name": "光照状态",
-                            "param_value": "阳照区"
-                        }
-                    ]
-                }
-            }
-        },
-        {
-            "step": "观察锂电池热控回路n温度阈值状态",
-            "ex_res": "锂电池热控回路n温度阈值状态应为阳照区温度阈值",
-            "code": {
-                "instr_type": "GETVALUE",
-                "instr_param": {
-                    "equip_name": "锂电池热控回路n",
-                    "param_list": [
-                        {
-                            "param_name": "温度阈值上限",
-                            "param_value": ""
-                        },
-                        {
-                            "param_name": "温度阈值下限",
-                            "param_value": ""
-                        }
-                    ]
-                }
-            }
-        }
-    ]
-}
+        tableData:this.$store.state.toAnalysisCase
       }
     },
     methods:{

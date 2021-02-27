@@ -82,42 +82,56 @@
 </template>
 
 <script>
+import { saveOneNewCaseToDataSet } from "@/network/network_request";
+
 export default {
   name: "NewCase",
   data(){
     return {
-      newCaseForm:{
-        "title": {
-            "func_desc": "普通回路热控阈值初始化处理测试",
-            "input_param": "锂电池热控回路编号，阳照区、阴影区状态",
-            "adjudge_param": "回路n温度阈值上限，回路n温度阈值下限"
-        },
-        "step_list": [
-            {
-                "step": "程序运行在正常模式下",
-                "ex_res": "遥测程序运行在正常在轨模式下",
-                "code": {
-                    "instr_type": "SETP",
-                    "instr_param": {
-                        "equip_name": "program",
-                        "param_list": [
-                            {
-                                "param_name": "mode",
-                                "param_value": "normal"
-                            }
-                        ]
-                    }
-                }
-            },
-        ]
-      }
+      newCaseForm:this.$store.state.selfWriteCase
     }
   },
   methods:{
-    //表单重置是对校验结果的重置
+    saveSuccess(){
+      this.$message({
+          message: '保存成功',
+          type: 'success'
+        });
+    },
+    saveFail(){
+      this.$message.error('自定义用例保存失败');
+    },
+    saveBtnClick(){
+      this.$store.state.isShowUseInstruction = false
+      this.$store.state.selfWriteCase = this.newCaseForm
+      this.$store.state.toAnalysisCase = this.newCaseForm
+      console.log('this.$store.state.toAnalysisCase = ',this.$store.state.toAnalysisCase)
+      this.$router.replace('/generation_flow')
+      //当新数据不为空时，将新保存的case数据保存到测试用例用户自定义文件数据库中
+      console.log('-----------------')
+      console.log(this.newCaseForm.title.func_desc)
+      console.log(this.newCaseForm.title.func_desc !== '')
+      if (this.newCaseForm.title.func_desc !== ''){
+        saveOneNewCaseToDataSet('/saveOneNewCase',this.newCaseForm).then(res => {
+          let tmp_res_code = res.data.code
+          if (tmp_res_code === 200){
+            this.saveSuccess()
+          }else{
+            console.log(res)
+            this.saveFail()
+          }
+        }).catch(err => {
+          console.log(err)
+          this.saveFail()
+        })
+      }
+      return this.newCaseForm
+    },
+    //点击重置，把表单设置为vuex里面state的defaultCase空值
     resetBtnClick(){
       console.log('reset')
-      console.log(this.$refs.newCaseFormRef)
+      this.newCaseForm = this.$store.state.defaultCase
+      this.$store.state.selfWriteCase = this.newCaseForm
       this.$refs.newCaseFormRef.resetFields()
     },
     removeParam(step_index,param_index){

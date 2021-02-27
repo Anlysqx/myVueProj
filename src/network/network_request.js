@@ -8,6 +8,13 @@ axios.interceptors.request.use(config => {
     return config
 })
 
+export function saveOneNewCaseToDataSet(url,newCaseForm) {
+    // 请求的后端api地址为 /saveOneNewCase
+    return axios.post(url,{
+        newCase:newCaseForm
+    })
+}
+
 export function withFileNameGetUsecaseList(file_name,url){
     // 请求的后端api地址为 /newFileCaseData
     return axios.post(url,{

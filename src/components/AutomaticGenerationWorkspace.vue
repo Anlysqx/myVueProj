@@ -115,7 +115,7 @@
           <router-view></router-view>
         </el-main>
         <el-aside width="200px">
-          <use-instructions v-if="isShowUseInstruction"></use-instructions>
+          <use-instructions v-if="$store.state.isShowUseInstruction"></use-instructions>
           <case-data-table ref="case_data_table_ref" v-else></case-data-table>
         </el-aside>
       </el-container>
@@ -138,7 +138,6 @@ export default {
       name:'anlysqx',
       iscollapseToggle:false,
       activePath:'',
-      isShowUseInstruction:true
     }
   },
   created() {
@@ -155,7 +154,7 @@ export default {
       this.activePath = path
       window.sessionStorage.setItem("activePath",path)
       if (this.activePath.substr(0,7) != 'usecase'){
-        this.isShowUseInstruction = true
+        this.$store.state.isShowUseInstruction = true
       }
     },
     useCaseSearchClick(){
@@ -225,11 +224,13 @@ export default {
       console.log(event.index)
       this.saveActivePath(event.index)
       let tmp_case_item = this.caseItemList[case_index]
-      this.isShowUseInstruction = false
+      this.$store.state.isShowUseInstruction = false
+      this.$store.state.toAnalysisCase = tmp_case_item
+      this.$router.replace('/generation_flow')
       //需要做延时处理，因为子组件不是一开始就渲染到浏览器上的
       // 要等待渲染完成，否则虽然能够执行成功但是会报错
       setTimeout(()=>{
-        this.$refs.case_data_table_ref.changeData(tmp_case_item)
+        this.$refs.case_data_table_ref.changeData(this.$store.state.toAnalysisCase)
       },10)
     }
   },
