@@ -67,6 +67,44 @@
                 </template>
               </el-menu-item>
             </el-submenu>
+            <el-submenu index="4">
+<!--              一级菜单模板区域-->
+              <template v-slot:title>
+                <i class="el-icon-s-tools"></i>
+                <span>功能组件</span>
+              </template>
+<!--              二级菜单-->
+              <el-menu-item index="/info_classify" @click.native="classifyClick">
+                <template v-slot:title>
+                  <i class="el-icon-menu"></i>
+                  <span>指令分类</span>
+                </template>
+              </el-menu-item>
+              <el-menu-item index="/info_extraction" @click.native="infoExtractionClick">
+                <template v-slot:title>
+                  <i class="el-icon-info"></i>
+                  <span>信息抽取</span>
+                </template>
+              </el-menu-item>
+              <el-menu-item index="/code_generation" @click.native="codeGenerClick">
+                <template v-slot:title>
+                  <i class="el-icon-s-claim"></i>
+                  <span>代码生成</span>
+                </template>
+              </el-menu-item>
+            </el-submenu>
+            <el-submenu index="5">
+              <template v-slot:title>
+                <i class="el-icon-document-add"></i>
+                <span>工作流</span>
+              </template>
+              <el-menu-item index="/generation_flow" @click.native="generFlowClick">
+                <template v-slot:title>
+                  <i class="el-icon-s-operation"></i>
+                  <span>脚本生成</span>
+                </template>
+              </el-menu-item>
+            </el-submenu>
           </el-menu>
         </el-aside>
         <el-main>
@@ -107,6 +145,22 @@ export default {
     saveActivePath(path){
       this.activePath = path
       window.sessionStorage.setItem("activePath",path)
+    },
+    classifyClick(){
+      this.saveActivePath('/info_classify')
+      this.$router.replace('/info_classify')
+    },
+    infoExtractionClick(){
+      this.saveActivePath('/info_extraction')
+      this.$router.replace('/info_extraction')
+    },
+    codeGenerClick(){
+      this.saveActivePath('/code_generation')
+      this.$router.replace('/code_generation')
+    },
+    generFlowClick(){
+      this.saveActivePath('/generation_flow')
+      this.$router.replace('/generation_flow')
     },
     newCaseClick(){
       this.saveActivePath('/newcase')
