@@ -18,8 +18,6 @@
             :collapse-transition="false"
             :unique-opened="true"
             class="el-menu-vertical-demo"
-            @open="handleOpen"
-            @close="handleClose"
             background-color="#fff"
             text-color="#0b2362"
             active-text-color="#cbb81f">
@@ -32,7 +30,7 @@
                 <span>测试文件选取</span>
               </template>
 <!--              二级菜单-->
-              <el-menu-item v-for="oneFileName in fileNameList" :key="oneFileName" :index="oneFileName" @click.native="fileItemClick">
+              <el-menu-item v-for="(oneFileName,file_index) in fileNameList" :key="oneFileName" :index="oneFileName" @click.native="fileItemClick(file_index,$event)">
                 <template v-slot:title>
                   <i class="el-icon-notebook-2"></i>
                   <span>{{oneFileName}}</span>
@@ -46,7 +44,7 @@
                 <span>测试用例</span>
               </template>
 <!--              二级菜单-->
-              <el-menu-item @click.native="caseItemClick" v-for="onecaseName in testCaseList" :key="onecaseName" :index="onecaseName">
+              <el-menu-item v-for="(onecaseName,case_index) in caseNameList" @click.native="caseItemClick(case_index,$event)" :index="'usecase' + case_index">
                 <template v-slot:title>
                   <i class="el-icon-data-analysis"></i>
                   <span>{{onecaseName}}</span>
@@ -118,7 +116,7 @@
         </el-main>
         <el-aside width="200px">
           <use-instructions v-if="isShowUseInstruction"></use-instructions>
-          <case-data-table v-else></case-data-table>
+          <case-data-table ref="case_data_table_ref" v-else></case-data-table>
         </el-aside>
       </el-container>
     </el-container>
@@ -126,7 +124,7 @@
 
 <script>
 import ExitBtn from "@/components/baseUtils/ExitBtn";
-import { getLeftMenuItemListData } from "@/network/network_request";
+import { getLeftMenuItemListData,withFileNameGetUsecaseList } from "@/network/network_request";
 import CaseDataTable from "@/components/baseUtils/CaseDataTable";
 import UseInstructions from "@/components/baseUtils/UseInstructions";
 
@@ -135,7 +133,8 @@ export default {
   data(){
     return {
       fileNameList:['文件1','文件2','文件3','文件4'],
-      testCaseList:['用例1','用例2','用例3','用例4'],
+      caseNameList:['用例1','用例2','用例3','用例4'],
+      caseItemList:[],
       name:'anlysqx',
       iscollapseToggle:false,
       activePath:'',
@@ -143,7 +142,9 @@ export default {
     }
   },
   created() {
+    //创建时请求左边menu菜单的数据，用于展示文件列表和默认文件下的测试用例
     this.getLeftMenuList()
+    //设置当前活跃路径，保存到session中，用于刷新时的记忆
     this.activePath = window.sessionStorage.getItem("activePath")
     if (!this.activePath){
       this.activePath = '/usecase_search'
@@ -153,6 +154,9 @@ export default {
     saveActivePath(path){
       this.activePath = path
       window.sessionStorage.setItem("activePath",path)
+      if (this.activePath.substr(0,7) != 'usecase'){
+        this.isShowUseInstruction = true
+      }
     },
     useCaseSearchClick(){
       this.saveActivePath('/usecase_search')
@@ -181,23 +185,52 @@ export default {
     toggleCollapse(){
       this.iscollapseToggle = !this.iscollapseToggle
     },
-    fileItemClick(event){
-      console.log(event)
-      console.log(this.name,'文件')
-      this.saveActivePath(event.index)
-    },
-    caseItemClick(event){
-      console.log(event)
-      console.log(this.name,'用例')
-      this.saveActivePath(event.index)
+    //从getLeftMenuList和fileItemClick中抽取出来的共同代码
+    //对请求得到的res中的caselist数据，进行统一更新操作
+    fromResGetCaseItemList(res){
+      this.caseItemList = res.data.message.defaultDataList.test_case
+      this.caseNameList = []
+      for (let item of this.caseItemList){
+        let tmp_one_name = item.title.func_desc
+        tmp_one_name = tmp_one_name.substr(0,4) + '...' + '测试'
+        this.caseNameList.push(tmp_one_name)
+      }
     },
     getLeftMenuList(){
       getLeftMenuItemListData('/leftMenuData').then(res => {
         console.log('leftmenu item data = ',res)
-        this.leftMenuList = res.data.message
+        this.fileNameList = res.data.message.fileList
+        this.fromResGetCaseItemList(res)
       }).catch(err => {
         console.log(err)
       })
+    },
+    fileItemClick(file_index,event){
+      console.log(event.index)
+      console.log(file_index)
+      this.saveActivePath(event.index)
+      if (file_index === 0) return
+      console.log('hello')
+      withFileNameGetUsecaseList(this.fileNameList[file_index],'/newFileCaseData').then(res => {
+        console.log('根据选择的文件名，请求对应的测试用例列表')
+        console.log('新请求到的 usecase data list = ',res)
+        ////////////////////////////
+        this.fromResGetCaseItemList(res)
+      }).catch(err => {
+        console.log(err)
+      })
+    },
+    caseItemClick(case_index,event){
+      console.log('case_index = ',case_index)
+      console.log(event.index)
+      this.saveActivePath(event.index)
+      let tmp_case_item = this.caseItemList[case_index]
+      this.isShowUseInstruction = false
+      //需要做延时处理，因为子组件不是一开始就渲染到浏览器上的
+      // 要等待渲染完成，否则虽然能够执行成功但是会报错
+      setTimeout(()=>{
+        this.$refs.case_data_table_ref.changeData(tmp_case_item)
+      },10)
     }
   },
   components:{
@@ -209,6 +242,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .el-menu-vertical-demo{
+    height: 600px;
+    overflow-y: auto;
+  }
   .toggle-btn{
     background-color: #faf6f6;
     font-size: 20px;

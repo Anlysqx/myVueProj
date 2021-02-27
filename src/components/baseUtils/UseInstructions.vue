@@ -121,12 +121,7 @@
 
 <script>
   export default {
-    name: "UseInstructions",
-    data(){
-      return {
-
-      }
-    }
+    name: "UseInstructions"
   }
 </script>
 

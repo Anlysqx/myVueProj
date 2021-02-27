@@ -8,6 +8,13 @@ axios.interceptors.request.use(config => {
     return config
 })
 
+export function withFileNameGetUsecaseList(file_name,url){
+    // 请求的后端api地址为 /newFileCaseData
+    return axios.post(url,{
+        file_name:file_name
+    })
+}
+
 export function getLeftMenuItemListData(url) {
     return axios.get(url)
 }

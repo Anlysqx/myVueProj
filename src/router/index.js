@@ -25,6 +25,7 @@ const routes = [
   {
     path:'/workspace',
     component: AutomaticGenerationWorkspace,
+    redirect: '/usecase_search',
     children:[
       {path:'/newcase',component:NewCase},
       {path:'/usecase_search',component:UseCaseSearch},

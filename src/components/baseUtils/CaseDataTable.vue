@@ -28,7 +28,8 @@
       </el-collapse-item>
       <el-collapse-item v-for="(one_step,index) in tableData.step_list" :name="index">
         <template v-slot:title>
-          <span class="span_step_style">测试步骤 {{index + 1}}</span>
+<!--          <span class="span_step_style">测试步骤 {{index + 1}}</span>-->
+          <span class="span_step_style">{{getStepSpan(one_step.step)}}</span>
         </template>
         <div class="step_div">
           <div>
@@ -124,6 +125,16 @@
       }
     },
     methods:{
+      getStepSpan(step_text){
+        let str_len = step_text.length
+        let result_str = ''
+        if (str_len >= 7){
+          result_str = step_text.substr(0,7)
+        }else{
+          result_str = step_text
+        }
+        return result_str + '...'
+      },
       handleChange(){
 
       },
