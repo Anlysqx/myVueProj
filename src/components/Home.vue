@@ -77,6 +77,7 @@ export default {
     >div{
       display: flex;
       align-items: center;
+      cursor: pointer;
       span {
         margin-left: 15px;
       }

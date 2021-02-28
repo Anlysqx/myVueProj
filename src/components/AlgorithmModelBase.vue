@@ -38,6 +38,7 @@ export default {
     width: 4.7%;
     height: 3%;
     border-radius: 50%;
+    cursor: pointer;
   }
   .container-style{
     height: 100%;

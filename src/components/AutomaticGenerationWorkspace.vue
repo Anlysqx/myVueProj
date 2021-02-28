@@ -294,5 +294,6 @@ export default {
     width: 5%;
     height: 3%;
     border-radius: 50%;
+    cursor: pointer;
   }
 </style>
