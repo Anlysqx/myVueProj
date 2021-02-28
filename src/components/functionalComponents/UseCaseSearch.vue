@@ -10,8 +10,9 @@
       <div style="margin-top: 15px">
         <el-input
           placeholder="请输入内容"
-          v-model="input3"
+          v-model="queryContent"
           class="input-with-select"
+          clearable
         >
           <template #prepend>
             <el-select v-model="select" placeholder="请选择">
@@ -35,11 +36,12 @@
     data(){
       return {
         select:'',
-        input3:''
+        queryContent:''
       }
     },
     methods:{
       searchBtnClick(){
+        // 需要增加search 函数，向服务器请求查询
         console.log('search btn click')
       }
     }
