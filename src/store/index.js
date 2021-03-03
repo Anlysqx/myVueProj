@@ -10,16 +10,16 @@ export default createStore({
         },
         "step_list": [
             {
-                "step": "",
-                "ex_res": "",
+                "step": "程序运行在正常模式下",
+                "ex_res": "遥测程序运行在正常在轨模式下",
                 "code": {
-                    "instr_type": "",
+                    "instr_type": "SETP",
                     "instr_param": {
-                        "equip_name": "",
+                        "equip_name": "PROGRAM",
                         "param_list": [
                             {
-                                "param_name": "",
-                                "param_value": ""
+                                "param_name": "MODE",
+                                "param_value": "normal"
                             }
                         ]
                     }
@@ -34,17 +34,17 @@ export default createStore({
             "adjudge_param": ""
         },
         "step_list": [
-            {
-                "step": "",
-                "ex_res": "",
+             {
+                "step": "程序运行在正常模式下",
+                "ex_res": "遥测程序运行在正常在轨模式下",
                 "code": {
-                    "instr_type": "",
+                    "instr_type": "SETP",
                     "instr_param": {
-                        "equip_name": "",
+                        "equip_name": "PROGRAM",
                         "param_list": [
                             {
-                                "param_name": "",
-                                "param_value": ""
+                                "param_name": "MODE",
+                                "param_value": "normal"
                             }
                         ]
                     }
