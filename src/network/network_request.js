@@ -8,6 +8,13 @@ axios.interceptors.request.use(config => {
     return config
 })
 
+export function get_equip_knowledge_base(url,text) {
+    // 请求的后端api地址为 /getEquipKnowledge
+    return axios.post(url,{
+        query:text
+    })
+}
+
 export function saveOneNewCaseToDataSet(url,newCaseForm) {
     // 请求的后端api地址为 /saveOneNewCase
     return axios.post(url,{

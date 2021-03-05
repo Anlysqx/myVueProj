@@ -13,6 +13,7 @@
           v-model="queryContent"
           class="input-with-select"
           clearable
+          @keyup.enter.native="searchBtnClick"
         >
           <template #prepend>
             <el-select v-model="select" placeholder="请选择">
@@ -22,32 +23,105 @@
             </el-select>
           </template>
           <template #append>
-            <el-button icon="el-icon-search" @click="searchBtnClick"></el-button>
+            <el-button icon="el-icon-search" @click.native="searchBtnClick"></el-button>
           </template>
         </el-input>
+      </div>
+      <div v-if="isshow_knowledge" class="case-data-search-style">
+        <el-collapse>
+          <el-collapse-item name="1">
+            <template v-slot:title>
+              <span class="span_title_style">热控系统设备知识库</span>
+            </template>
+            <div class="content_style" v-for="item of knowledge">
+              <span>{{item[0]}} ':' {{item[1]}}</span>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item name="2">
+            <template v-slot:title>
+              <span class="span_title_style">测试参数候选列表</span>
+            </template>
+            <div class="content_style" v-for="one_candidate of candidates">
+              <span>{{one_candidate[0]}} ' lcs = ' {{one_candidate[1]}}</span>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item name="3">
+            <template v-slot:title>
+              <span class="span_title_style">指令类型预测</span>
+            </template>
+            <div>
+              <span>{{p_instruction_type}}</span>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item name="4">
+            <template v-slot:title>
+              <span class="span_title_style">指令参数数目预测</span>
+            </template>
+            <div>
+              <span>{{p_param_num}}</span>
+            </div>
+          </el-collapse-item>
+        </el-collapse>
       </div>
     </el-card>
   </div>
 </template>
 
 <script>
+  import {get_equip_knowledge_base} from "@/network/network_request";
   export default {
     name: "UseCaseSearch",
     data(){
       return {
         select:'',
-        queryContent:''
+        queryContent:'',
+        isshow_knowledge:false,
+        knowledge:'',
+        candidates:'',
+        p_instruction_type:'',
+        p_param_num:''
       }
     },
     methods:{
       searchBtnClick(){
         // 需要增加search 函数，向服务器请求查询
         console.log('search btn click')
+        console.log(this.queryContent)
+        get_equip_knowledge_base('/getEquipKnowledge',this.queryContent).then(res => {
+          console.log(res)
+          this.isshow_knowledge = true
+          // this.knowledge = {'name':['hello','hi']}
+          this.knowledge = res.data.message.knowledge
+          this.candidates = res.data.message.sorted_candidate
+          this.p_instruction_type = res.data.message.p_instru_type
+          this.p_param_num = res.data.message.p_param_num
+        }).catch(err => {
+          console.log(err)
+        })
       }
     }
   }
 </script>
 
 <style lang="less" scoped>
-
+  .el-collapse-item{
+    margin-top: 1%;
+    span{
+      color: #273865;
+      font-weight: bold;
+      padding: 5%;
+    }
+  }
+  .case-data-search-style{
+    height: 500px;
+    overflow-y: auto;
+    font-weight: bold;
+  }
+  .content_style{
+    background-color: #d0d0d0;
+    color: #273865;
+    span{
+      padding: 2%;
+    }
+  }
 </style>
