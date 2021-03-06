@@ -28,7 +28,7 @@
         </el-input>
       </div>
       <div v-if="isshow_knowledge" class="case-data-search-style">
-        <el-collapse>
+        <el-collapse accordion>
           <el-collapse-item name="1">
             <template v-slot:title>
               <span class="span_title_style">热控系统设备知识库</span>
@@ -61,6 +61,22 @@
               <span>{{p_param_num}}</span>
             </div>
           </el-collapse-item>
+          <el-collapse-item name="5">
+            <template v-slot:title>
+              <span class="span_title_style">模型2候选集预测输出</span>
+            </template>
+            <div class="content_style" v-for="one_predict_item of model2_predict">
+              <span>{{one_predict_item[0]}} ' prob = ' {{one_predict_item[1]}}</span>
+            </div>
+          </el-collapse-item>
+          <el-collapse-item name="6">
+            <template v-slot:title>
+              <span class="span_title_style">指令参数最终加权结果</span>
+            </template>
+            <div class="last_result_style"  v-for="one_last_predict of last_result">
+              <span>{{one_last_predict[0]}} ' score = ' {{one_last_predict[1]}}</span>
+            </div>
+          </el-collapse-item>
         </el-collapse>
       </div>
     </el-card>
@@ -79,7 +95,9 @@
         knowledge:'',
         candidates:'',
         p_instruction_type:'',
-        p_param_num:''
+        p_param_num:'',
+        model2_predict:'',
+        last_result:''
       }
     },
     methods:{
@@ -95,6 +113,8 @@
           this.candidates = res.data.message.sorted_candidate
           this.p_instruction_type = res.data.message.p_instru_type
           this.p_param_num = res.data.message.p_param_num
+          this.model2_predict = res.data.message.model2_predict_names
+          this.last_result = res.data.message.last_result
         }).catch(err => {
           console.log(err)
         })
@@ -104,6 +124,12 @@
 </script>
 
 <style lang="less" scoped>
+  .last_result_style{
+    background-color: #00d053;
+    margin: 5%;
+    padding: 3%;
+    text-align: center;
+  }
   .el-collapse-item{
     margin-top: 1%;
     span{
