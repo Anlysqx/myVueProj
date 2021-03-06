@@ -77,6 +77,14 @@
               <span>{{one_last_predict[0]}} ' score = ' {{one_last_predict[1]}}</span>
             </div>
           </el-collapse-item>
+          <el-collapse-item name="7">
+            <template v-slot:title>
+              <span class="span_title_style">指令参数值抽取结果</span>
+            </template>
+            <div class="content_style"  v-for="one_extract_values of extract_values">
+              <span>{{one_extract_values}}</span>
+            </div>
+          </el-collapse-item>
         </el-collapse>
       </div>
     </el-card>
@@ -97,7 +105,8 @@
         p_instruction_type:'',
         p_param_num:'',
         model2_predict:'',
-        last_result:''
+        last_result:'',
+        extract_values:''
       }
     },
     methods:{
@@ -115,6 +124,7 @@
           this.p_param_num = res.data.message.p_param_num
           this.model2_predict = res.data.message.model2_predict_names
           this.last_result = res.data.message.last_result
+          this.extract_values = res.data.message.extract_values
         }).catch(err => {
           console.log(err)
         })
