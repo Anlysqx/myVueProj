@@ -10,6 +10,9 @@
       </el-header>
       <el-main>
         <h2>算法模型库</h2>
+        <div style="width: 600px;display: flex">
+          <GraphTopology></GraphTopology>
+        </div>
       </el-main>
     </el-container>
   </div>
@@ -17,6 +20,7 @@
 
 <script>
 import ExitBtn from "@/components/baseUtils/ExitBtn";
+import GraphTopology from "@/components/baseUtils/GraphTopology";
 export default {
   name: "AlgorithmModelBase",
   data(){
@@ -28,7 +32,7 @@ export default {
     }
   },
   components:{
-    ExitBtn
+    ExitBtn,GraphTopology
   }
 }
 </script>

@@ -1,16 +1,21 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/workspace' }">工作台</el-breadcrumb-item>
-      <el-breadcrumb-item>脚本生成工作流</el-breadcrumb-item>
-    </el-breadcrumb>
+    <StepBar :active="active"></StepBar>
   </div>
 </template>
 
 <script>
+import StepBar from "@/components/baseUtils/StepBar";
 export default {
-  name: "GenerFlowComponent"
+  name: "GenerFlowComponent",
+  data(){
+    return {
+      active:4
+    }
+  },
+  components:{
+    StepBar
+  }
 }
 </script>
 

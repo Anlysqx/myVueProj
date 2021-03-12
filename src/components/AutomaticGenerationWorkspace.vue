@@ -68,14 +68,14 @@
             <el-submenu index="4">
 <!--              一级菜单模板区域-->
               <template v-slot:title>
-                <i class="el-icon-s-tools"></i>
-                <span>功能组件</span>
+                <i class="el-icon-s-operation"></i>
+                <span>工作流</span>
               </template>
 <!--              二级菜单-->
-              <el-menu-item index="/usecase_search" @click.native="useCaseSearchClick">
+              <el-menu-item index="/subject_identification" @click.native="subjectIdentificationClick">
                 <template v-slot:title>
-                  <i class="el-icon-search"></i>
-                  <span>用例搜索</span>
+                  <i class="el-icon-key"></i>
+                  <span>主体识别</span>
                 </template>
               </el-menu-item>
               <el-menu-item index="/info_classify" @click.native="classifyClick">
@@ -92,20 +92,26 @@
               </el-menu-item>
               <el-menu-item index="/code_generation" @click.native="codeGenerClick">
                 <template v-slot:title>
+                  <i class="el-icon-finished"></i>
+                  <span>参数匹配</span>
+                </template>
+              </el-menu-item>
+              <el-menu-item index="/generation_flow" @click.native="generFlowClick">
+                <template v-slot:title>
                   <i class="el-icon-s-claim"></i>
-                  <span>代码生成</span>
+                  <span>脚本生成</span>
                 </template>
               </el-menu-item>
             </el-submenu>
             <el-submenu index="5">
               <template v-slot:title>
-                <i class="el-icon-document-add"></i>
-                <span>工作流</span>
+                <i class="el-icon-s-tools"></i>
+                <span>功能组件</span>
               </template>
-              <el-menu-item index="/generation_flow" @click.native="generFlowClick">
+              <el-menu-item index="/usecase_search" @click.native="useCaseSearchClick">
                 <template v-slot:title>
-                  <i class="el-icon-s-operation"></i>
-                  <span>脚本生成</span>
+                  <i class="el-icon-search"></i>
+                  <span>用例搜索</span>
                 </template>
               </el-menu-item>
             </el-submenu>
@@ -137,7 +143,7 @@ export default {
       caseItemList:[],
       name:'anlysqx',
       iscollapseToggle:false,
-      activePath:'',
+      activePath:window.sessionStorage.getItem("activePath"),
     }
   },
   created() {
@@ -146,7 +152,8 @@ export default {
     //设置当前活跃路径，保存到session中，用于刷新时的记忆
     this.activePath = window.sessionStorage.getItem("activePath")
     if (!this.activePath){
-      this.activePath = '/usecase_search'
+      this.activePath = '/subject_identification'
+      window.sessionStorage.setItem("activePath",this.activePath)
     }
   },
   methods:{
@@ -155,10 +162,15 @@ export default {
     },
     saveActivePath(path){
       this.activePath = path
-      window.sessionStorage.setItem("activePath",path)
-      if (this.activePath.substr(0,7) != 'usecase'){
-        this.$store.state.isShowUseInstruction = true
+      window.sessionStorage.setItem("activePath",this.activePath)
+      if (this.$store.state.toAnalysisCase.title.func_desc !== ''){
+        // console.log('条件判断成功，不是空')
+        this.$store.state.isShowUseInstruction = false
       }
+    },
+    subjectIdentificationClick(){
+      this.saveActivePath('/subject_identification')
+      this.$router.replace('/subject_identification')
     },
     useCaseSearchClick(){
       this.saveActivePath('/usecase_search')
@@ -229,9 +241,10 @@ export default {
       let tmp_case_item = this.caseItemList[case_index]
       this.$store.state.isShowUseInstruction = false
       this.$store.state.toAnalysisCase = tmp_case_item
-      this.$router.replace('/generation_flow')
+      this.saveActivePath('/subject_identification')
       //需要做延时处理，因为子组件不是一开始就渲染到浏览器上的
       // 要等待渲染完成，否则虽然能够执行成功但是会报错
+      console.log(this.$store.state.toAnalysisCase)
       setTimeout(()=>{
         this.$refs.case_data_table_ref.changeData(this.$store.state.toAnalysisCase)
       },10)

@@ -11,6 +11,7 @@ import AutomaticGenerationWorkspace from "@/components/AutomaticGenerationWorksp
 import AlgorithmModelBase from "@/components/AlgorithmModelBase";
 import ResultAnalysisAndTreatment from "@/components/ResultAnalysisAndTreatment";
 import TestCaseDataBase from "@/components/TestCaseDataBase";
+import SubjectIdentification from "@/components/functionalComponents/SubjectIdentification";
 
 const routes = [
   {
@@ -40,10 +41,11 @@ const routes = [
   {
     path:'/workspace',
     component: AutomaticGenerationWorkspace,
-    redirect: '/usecase_search',
+    redirect: '/subject_identification',
     children:[
       {path:'/newcase',component:NewCase},
       {path:'/usecase_search',component:UseCaseSearch},
+      {path:'/subject_identification',component:SubjectIdentification},
       {path:'/info_classify',component:ClassifyComponent},
       {path:'/info_extraction',component:InfoExtractComponent},
       {path:'/code_generation',component:CodeGenerationComponent},

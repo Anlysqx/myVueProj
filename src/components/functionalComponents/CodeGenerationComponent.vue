@@ -1,16 +1,21 @@
 <template>
   <div>
-    <el-breadcrumb separator-class="el-icon-arrow-right">
-      <el-breadcrumb-item :to="{ path: '/home' }">首页</el-breadcrumb-item>
-      <el-breadcrumb-item :to="{ path: '/workspace' }">工作台</el-breadcrumb-item>
-      <el-breadcrumb-item>代码生成</el-breadcrumb-item>
-    </el-breadcrumb>
+    <StepBar :active="active"></StepBar>
   </div>
 </template>
 
 <script>
+import StepBar from "@/components/baseUtils/StepBar";
 export default {
-  name: "CodeGenerationComponent"
+  name: "CodeGenerationComponent",
+  data(){
+    return {
+      active:3
+    }
+  },
+  components:{
+    StepBar
+  }
 }
 </script>
 

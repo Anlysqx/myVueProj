@@ -6,12 +6,16 @@
 
 <script>
 import StepBar from "@/components/baseUtils/StepBar";
+
   export default {
-    name: "InfoExtractComponent",
+    name: "SubjectIdentification",
     data(){
       return {
-        active:2
+        active:0
       }
+    },
+    methods:{
+
     },
     components:{
       StepBar
@@ -19,6 +23,6 @@ import StepBar from "@/components/baseUtils/StepBar";
   }
 </script>
 
-<style scoped>
+<style lang="less" scoped>
 
 </style>
