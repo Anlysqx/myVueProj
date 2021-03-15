@@ -118,7 +118,7 @@
           </el-menu>
         </el-aside>
         <el-main>
-          <router-view></router-view>
+          <router-view v-if="isRouterAlive"></router-view>
         </el-main>
         <el-aside width="200px">
           <use-instructions v-if="$store.state.isShowUseInstruction"></use-instructions>
@@ -144,6 +144,7 @@ export default {
       name:'anlysqx',
       iscollapseToggle:false,
       activePath:window.sessionStorage.getItem("activePath"),
+      isRouterAlive:true
     }
   },
   created() {
@@ -157,6 +158,10 @@ export default {
     }
   },
   methods:{
+    reload(){
+     this.isRouterAlive = false
+     this.$nextTick(() => (this.isRouterAlive = true))
+    },
     headerClick(){
       this.$router.replace('/home')
     },
@@ -169,6 +174,7 @@ export default {
       }
     },
     subjectIdentificationClick(){
+      console.log('主体识别click')
       this.saveActivePath('/subject_identification')
       this.$router.replace('/subject_identification')
     },
@@ -202,7 +208,7 @@ export default {
     //从getLeftMenuList和fileItemClick中抽取出来的共同代码
     //对请求得到的res中的caselist数据，进行统一更新操作
     fromResGetCaseItemList(res){
-      this.caseItemList = res.data.message.defaultDataList.test_case
+      this.caseItemList = res.data.message.defaultDataList
       this.caseNameList = []
       for (let item of this.caseItemList){
         let tmp_one_name = item.title.func_desc
@@ -237,17 +243,18 @@ export default {
     caseItemClick(case_index,event){
       console.log('case_index = ',case_index)
       console.log(event.index)
-      this.saveActivePath(event.index)
       let tmp_case_item = this.caseItemList[case_index]
       this.$store.state.isShowUseInstruction = false
       this.$store.state.toAnalysisCase = tmp_case_item
+      console.log(this.$store.state.toAnalysisCase)
       this.saveActivePath('/subject_identification')
       //需要做延时处理，因为子组件不是一开始就渲染到浏览器上的
       // 要等待渲染完成，否则虽然能够执行成功但是会报错
-      console.log(this.$store.state.toAnalysisCase)
       setTimeout(()=>{
         this.$refs.case_data_table_ref.changeData(this.$store.state.toAnalysisCase)
       },10)
+      // 刷新router-view
+      this.reload()
     }
   },
   components:{
