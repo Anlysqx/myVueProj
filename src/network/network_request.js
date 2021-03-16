@@ -8,10 +8,18 @@ axios.interceptors.request.use(config => {
     return config
 })
 
-export function get_equip_knowledge_base(url,text) {
-    // 请求的后端api地址为 /getEquipKnowledge
+export function get_subject_and_tree(url,usecase){
+    // 请求的后端api地址为 /getSubjectAndTree
     return axios.post(url,{
-        query:text
+        usecase:usecase
+    })
+}
+
+export function get_equip_knowledge_base(url,step_list) {
+    // 请求的后端api地址为 /getEquipKnowledge
+    console.log(step_list)
+    return axios.post(url,{
+        query:step_list
     })
 }
 

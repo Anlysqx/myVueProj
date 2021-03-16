@@ -54,20 +54,6 @@
             <el-submenu index="3">
 <!--              一级菜单模板区域-->
               <template v-slot:title>
-                <i class="el-icon-document-add"></i>
-                <span>自定义用例</span>
-              </template>
-<!--              二级菜单-->
-              <el-menu-item index="/newcase" @click.native="newCaseClick">
-                <template v-slot:title>
-                  <i class="el-icon-edit"></i>
-                  <span>添加</span>
-                </template>
-              </el-menu-item>
-            </el-submenu>
-            <el-submenu index="4">
-<!--              一级菜单模板区域-->
-              <template v-slot:title>
                 <i class="el-icon-s-operation"></i>
                 <span>工作流</span>
               </template>
@@ -103,6 +89,20 @@
                 </template>
               </el-menu-item>
             </el-submenu>
+            <el-submenu index="4">
+<!--              一级菜单模板区域-->
+              <template v-slot:title>
+                <i class="el-icon-document-add"></i>
+                <span>自定义用例</span>
+              </template>
+<!--              二级菜单-->
+              <el-menu-item index="/newcase" @click.native="newCaseClick">
+                <template v-slot:title>
+                  <i class="el-icon-edit"></i>
+                  <span>添加</span>
+                </template>
+              </el-menu-item>
+            </el-submenu>
             <el-submenu index="5">
               <template v-slot:title>
                 <i class="el-icon-s-tools"></i>
@@ -130,7 +130,7 @@
 
 <script>
 import ExitBtn from "@/components/baseUtils/ExitBtn";
-import { getLeftMenuItemListData,withFileNameGetUsecaseList } from "@/network/network_request";
+import {get_subject_and_tree, getLeftMenuItemListData, withFileNameGetUsecaseList} from "@/network/network_request";
 import CaseDataTable from "@/components/baseUtils/CaseDataTable";
 import UseInstructions from "@/components/baseUtils/UseInstructions";
 
@@ -144,7 +144,7 @@ export default {
       name:'anlysqx',
       iscollapseToggle:false,
       activePath:window.sessionStorage.getItem("activePath"),
-      isRouterAlive:true
+      isRouterAlive:true,
     }
   },
   created() {
@@ -234,7 +234,6 @@ export default {
       withFileNameGetUsecaseList(this.fileNameList[file_index],'/newFileCaseData').then(res => {
         console.log('根据选择的文件名，请求对应的测试用例列表')
         console.log('新请求到的 usecase data list = ',res)
-        ////////////////////////////
         this.fromResGetCaseItemList(res)
       }).catch(err => {
         console.log(err)
@@ -246,8 +245,18 @@ export default {
       let tmp_case_item = this.caseItemList[case_index]
       this.$store.state.isShowUseInstruction = false
       this.$store.state.toAnalysisCase = tmp_case_item
-      console.log(this.$store.state.toAnalysisCase)
-      this.saveActivePath('/subject_identification')
+      // 这里需要进行主体分析和请求得到知识库
+      console.log('进行主体分析和请求得到知识库')
+      get_subject_and_tree('/getSubjectAndTree',this.$store.state.toAnalysisCase).then(res => {
+        this.$store.state.knowledge_tree = res.data.message["knowledge_tree"]
+        console.log(this.$store.state.knowledge_tree)
+        // 得到主体
+        //////////////////////////
+        //   to   do
+        /////////////////////////
+      }).catch(err => {
+        console.log(err)
+      })
       //需要做延时处理，因为子组件不是一开始就渲染到浏览器上的
       // 要等待渲染完成，否则虽然能够执行成功但是会报错
       setTimeout(()=>{

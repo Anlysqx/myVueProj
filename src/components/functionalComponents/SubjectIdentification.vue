@@ -1,8 +1,14 @@
 <template>
   <div>
     <StepBar :active="active"></StepBar>
-    <div class="tabs-style">
-      <el-tabs tab-position="top" type="border-card">
+    <div>
+      <div v-if="is_work_flow">
+        <div class="analyze-style">
+          <el-button type="success" round @click="work_flow_btn_click">Analysis workflow</el-button>
+        </div>
+      </div>
+      <div class="tabs-style" v-else>
+        <el-tabs tab-position="top" type="border-card">
           <el-tab-pane label="测试用例">
             <div v-if="ifUseCase" class="content_style">
               <el-row class="my-el-row">
@@ -50,19 +56,20 @@
             <span>主体识别</span>
           </el-tab-pane>
           <el-tab-pane label="测试设备知识库">
-            <GraphTopology></GraphTopology>
-            <div v-if="subject_knowledge_dict !== ''">
-            </div>
+            <GraphTopology v-if="is_show_tree" :tableData="my_table_data"></GraphTopology>
           </el-tab-pane>
         </el-tabs>
+      </div>
     </div>
   </div>
 </template>
 
 <script>
 import StepBar from "@/components/baseUtils/StepBar";
-import MindMap from "@/components/baseUtils/MindMap";
 import GraphTopology from "@/components/baseUtils/GraphTopology";
+import {get_equip_knowledge_base} from "@/network/network_request";
+import {ElMessage} from "element-plus";
+
   export default {
     name: "SubjectIdentification",
     data() {
@@ -70,19 +77,60 @@ import GraphTopology from "@/components/baseUtils/GraphTopology";
         active: 0,
         usecase_data: this.$store.state.toAnalysisCase,
         ifUseCase: this.$store.state.toAnalysisCase.title.func_desc !== '',
-        subject_knowledge_dict: ''
+        subject_knowledge_dict: '',
+        is_show_tree:true,
+        is_work_flow:true,
+        step_list: this.$store.state.toAnalysisCase["step_list"],
+        my_table_data:this.$store.state.knowledge_tree
+      }
+    },
+    watch:{
+      my_table_data:function () {
+        this.is_show_tree = false
+        console.log('知识树发生了改变')
+        this.is_show_tree = true
       }
     },
     methods:{
-
+      // 得到测试主体后，用于进行测试用例分析
+      work_flow_btn_click(){
+        console.log('work flow btn click')
+        if (this.step_list[0]['step'] === ''){
+          ElMessage('请先选择一则测试用例')
+        }else{
+          this.is_work_flow = false
+          this.query_server()
+        }
+      },
+      query_server() {
+        // 循环向服务器请求查询
+        console.log('search btn click')
+        console.log('this.step_result = ',this.step_result)
+        // 这里应该直接把所有的query_step_list 传输出去
+        get_equip_knowledge_base('/getEquipKnowledge', this.step_list).then(res => {
+          console.log(res)
+          this.$store.state.step_result = res.data.message["query_result"]
+          console.log('this.$store.state.step_result = ',this.$store.state.step_result)
+        }).catch(err => {
+          console.log(err)
+        })
+      }
     },
     components:{
-      StepBar,MindMap,GraphTopology
+      StepBar,GraphTopology
     }
   }
 </script>
 
 <style lang="less" scoped>
+  .analyze-style{
+    margin: 1%;
+    margin-bottom: 4%;
+    position: absolute;
+    left: 40%;
+    top: 30%;
+    transform: translate(-50%,-50%,-50%,-50%);
+  }
   el-tabs{
     padding: 0;
   }

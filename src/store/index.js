@@ -2,6 +2,9 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    mainSubject:'',
+    knowledge_tree:'',
+    step_result:'',
     selfWriteCase:{
         "title": {
             "func_desc": "",

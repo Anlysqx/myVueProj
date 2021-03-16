@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="out-style">
     <el-container class="container-style">
       <el-header>
         <div @click="headerClick">
@@ -17,6 +17,7 @@
 
 <script>
 import ExitBtn from "@/components/baseUtils/ExitBtn";
+
 export default {
   name: "ResultAnalysisAndTreatment",
   data(){
@@ -34,6 +35,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  .out-style{
+    height: 100%;
+  }
   .header-left-style{
     width: 4.7%;
     height: 3%;
@@ -43,6 +47,9 @@ export default {
   .container-style{
     height: 100%;
     overflow-y: hidden;
+  }
+  .el-main{
+    height: 100%;
   }
   .el-header{
     background-color: #273865;

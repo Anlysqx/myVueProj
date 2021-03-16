@@ -7,9 +7,11 @@
     "build": "vue-cli-service build"
   },
   "dependencies": {
+    "@antv/g2plot": "^2.3.15",
     "@antv/g6": "^4.2.0",
     "axios": "^0.21.1",
     "core-js": "^3.6.5",
+    "echarts": "^5.0.2",
     "element-plus": "^1.0.2-beta.32",
     "less": "^4.1.1",
     "less-loader": "^5.0.0",
