@@ -102,6 +102,7 @@ import {ElMessage} from "element-plus";
           this.query_server()
         }
       },
+
       query_server() {
         // 循环向服务器请求查询
         console.log('search btn click')

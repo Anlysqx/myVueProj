@@ -21,8 +21,6 @@
               <span style="color: #0529ac;font-weight: bold"> {{now_step['step']}}</span>
             </div>
             <div class="model-value">
-<!--              {{now_result['extract_values']}}-->
-<!--              {{now_result['sorted_candidate']}}-->
               <value-circle-gragh :valueData="my_value_data"></value-circle-gragh>
             </div>
             <div class="candidate-style">

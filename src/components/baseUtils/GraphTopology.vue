@@ -14,90 +14,6 @@
     },
     data(){
       return {
-    //     now_data: {
-    //     "name": "广东",
-    //     "value": "01",
-    //     "sj": "-",
-    //     "children": [
-    //         {
-    //             "name": "广州",
-    //             "value": "0101",
-    //             "sj": "01",
-    //             "children": [
-    //                 {
-    //                     "name": "萝岗",
-    //                     "value": "010101",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "天河",
-    //                     "value": "010102",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "黄埔",
-    //                     "value": "010103",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "白云",
-    //                     "value": "010104",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "花都",
-    //                     "value": "010105",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "海珠",
-    //                     "value": "010106",
-    //                     "sj": "0101"
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             "name": "潮州",
-    //             "value": "0102",
-    //             "sj": "01",
-    //             "children": [
-    //                 {
-    //                     "name": "枫溪",
-    //                     "value": "010201",
-    //                     "sj": "0102"
-    //                 },
-    //                 {
-    //                     "name": "枫桥",
-    //                     "value": "010202",
-    //                     "sj": "0102"
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             "name": "深圳",
-    //             "value": "0103",
-    //             "sj": "01",
-    //             "children": [
-    //                 {
-    //                     "name": "罗湖",
-    //                     "value": "010301",
-    //                     "sj": "0103"
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             "name": "茂名",
-    //             "value": "0104",
-    //             "sj": "01"
-    //         },
-    //         {
-    //             "name": "揭阳",
-    //             "value": "0105",
-    //             "sj": "01"
-    //         }
-    //     ]
-    // },
-        now_data:{'name': '热控系统知识库', 'children': [{'name': 'equip_names', 'children': [{'name': '热控回路8'}, {'name': '热控回路2'}, {'name': '锂电池热控回路3'}, {'name': '热控回路4'}, {'name': '热控回路5'}, {'name': 'PROGRAM'}, {'name': '热控回路1'}, {'name': '锂电池热控回路1'}, {'name': '锂电池热控回路6'}, {'name': '热控回路3'}, {'name': '锂电池热控回路2'}, {'name': '锂电池热控回路5'}, {'name': '热控回路7'}]}, {'name': 'MODE', 'children': [{'name': 'normal'}]}, {'name': '温度阈值上限', 'children': [{'name': 't2'}, {'name': 't5'}, {'name': 't3'}, {'name': 't1'}]}, {'name': '温度阈值下限', 'children': [{'name': 't4'}, {'name': 't1'}, {'name': 't2'}, {'name': 't6'}, {'name': 't3'}]}, {'name': '光照状态', 'children': [{'name': '阳照区'}, {'name': '阴影区'}]}, {'name': '健康报警状态', 'children': [{'name': '开启'}, {'name': '关闭'}]}, {'name': '自控开关状态', 'children': [{'name': '断开'}, {'name': '闭合'}]}, {'name': '热敏电阻PK85', 'children': [{'name': 'R2'}, {'name': 'R1'}]}, {'name': '热敏电阻PK86', 'children': [{'name': 'R2'}]}, {'name': '热敏电阻PK87', 'children': [{'name': 'R3'}]}, {'name': '热敏电阻PK88', 'children': [{'name': 'R4'}]}, {'name': '内循环回路压力值', 'children': [{'name': 'P1'}]}, {'name': '外循环回路压力值', 'children': [{'name': 'P4'}, {'name': 'P5'}]}, {'name': '电加热器电压值', 'children': [{'name': 'V3'}, {'name': 'V2'}]}]},
         charts: '',
         option : {
           tooltip: {
@@ -113,89 +29,6 @@
           series: [
               {
                   type: 'tree',
-    //               data: [ {
-    //     "name": "广东",
-    //     "value": "01",
-    //     "sj": "-",
-    //     "children": [
-    //         {
-    //             "name": "广州",
-    //             "value": "0101",
-    //             "sj": "01",
-    //             "children": [
-    //                 {
-    //                     "name": "萝岗",
-    //                     "value": "010101",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "天河",
-    //                     "value": "010102",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "黄埔",
-    //                     "value": "010103",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "白云",
-    //                     "value": "010104",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "花都",
-    //                     "value": "010105",
-    //                     "sj": "0101"
-    //                 },
-    //                 {
-    //                     "name": "海珠",
-    //                     "value": "010106",
-    //                     "sj": "0101"
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             "name": "潮州",
-    //             "value": "0102",
-    //             "sj": "01",
-    //             "children": [
-    //                 {
-    //                     "name": "枫溪",
-    //                     "value": "010201",
-    //                     "sj": "0102"
-    //                 },
-    //                 {
-    //                     "name": "枫桥",
-    //                     "value": "010202",
-    //                     "sj": "0102"
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             "name": "深圳",
-    //             "value": "0103",
-    //             "sj": "01",
-    //             "children": [
-    //                 {
-    //                     "name": "罗湖",
-    //                     "value": "010301",
-    //                     "sj": "0103"
-    //                 }
-    //             ]
-    //         },
-    //         {
-    //             "name": "茂名",
-    //             "value": "0104",
-    //             "sj": "01"
-    //         },
-    //         {
-    //             "name": "揭阳",
-    //             "value": "0105",
-    //             "sj": "01"
-    //         }
-    //     ]
-    // }],
                   data:[{'name': '热控系统知识库', 'children': [{'name': 'equip_names', 'children': [{'name': '热控回路8'}, {'name': '热控回路2'}, {'name': '锂电池热控回路3'}, {'name': '热控回路4'}, {'name': '热控回路5'}, {'name': 'PROGRAM'}, {'name': '热控回路1'}, {'name': '锂电池热控回路1'}, {'name': '锂电池热控回路6'}, {'name': '热控回路3'}, {'name': '锂电池热控回路2'}, {'name': '锂电池热控回路5'}, {'name': '热控回路7'}]}, {'name': 'MODE', 'children': [{'name': 'normal'}]}, {'name': '温度阈值上限', 'children': [{'name': 't2'}, {'name': 't5'}, {'name': 't3'}, {'name': 't1'}]}, {'name': '温度阈值下限', 'children': [{'name': 't4'}, {'name': 't1'}, {'name': 't2'}, {'name': 't6'}, {'name': 't3'}]}, {'name': '光照状态', 'children': [{'name': '阳照区'}, {'name': '阴影区'}]}, {'name': '健康报警状态', 'children': [{'name': '开启'}, {'name': '关闭'}]}, {'name': '自控开关状态', 'children': [{'name': '断开'}, {'name': '闭合'}]}, {'name': '热敏电阻PK85', 'children': [{'name': 'R2'}, {'name': 'R1'}]}, {'name': '热敏电阻PK86', 'children': [{'name': 'R2'}]}, {'name': '热敏电阻PK87', 'children': [{'name': 'R3'}]}, {'name': '热敏电阻PK88', 'children': [{'name': 'R4'}]}, {'name': '内循环回路压力值', 'children': [{'name': 'P1'}]}, {'name': '外循环回路压力值', 'children': [{'name': 'P4'}, {'name': 'P5'}]}, {'name': '电加热器电压值', 'children': [{'name': 'V3'}, {'name': 'V2'}]}]}],
                   left: '3%',
                   right: '1%',
@@ -254,7 +87,7 @@
       },
       pieInit(){
         console.log('tableData = ',this.tableData)
-        this.pieOp.series[0].data = this.tableData
+        this.option.series[0].data = this.tableData
       }
     },
     mounted() {
@@ -270,6 +103,7 @@
       }
     },
     created() {
+
     }
   }
 </script>
