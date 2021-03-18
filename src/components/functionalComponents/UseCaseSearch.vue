@@ -27,7 +27,7 @@
     </el-card>
     <div class="search-result-style">
         <el-tabs type="border-card">
-          <el-tab-pane v-for="(value,key,index) in step_result" :label="key">
+          <el-tab-pane v-for="(value,key,index) in my_step_result" :label="key">
             {{value}}
           </el-tab-pane>
         </el-tabs>
@@ -44,10 +44,22 @@ import {get_equip_knowledge_base, getLeftMenuItemListData} from "@/network/netwo
         select:'',
         queryContent:'',
         fileNameList:[],
-        step_result:{}
+        step_result:{},
+        my_step_result:{}
       }
     },
     methods:{
+      get_my_step_result(){
+        this.my_step_result["equip_name"] = this.step_result["equip_name"]
+        this.my_step_result["指令类型"] = this.step_result["p_instru_type"]
+        this.my_step_result["参数数目"] = this.step_result["p_param_num"]
+        this.my_step_result["参数值"] = this.step_result["extract_values"]
+        this.my_step_result["参数候选值"] = this.step_result["sorted_candidate"]
+        this.my_step_result["匹配候选值"] = this.step_result["candidates_for_match_pair"]
+        this.my_step_result["model2_output"] = this.step_result["model2_result"]
+        this.my_step_result["平均距离匹配算法"] = this.step_result["ruls_res"]
+        this.my_step_result["last_result"] = this.step_result["last_result"]
+      },
       getLeftMenuList(){
         getLeftMenuItemListData('/leftMenuData').then(res => {
           console.log('leftmenu item data = ',res)
@@ -64,6 +76,7 @@ import {get_equip_knowledge_base, getLeftMenuItemListData} from "@/network/netwo
         get_equip_knowledge_base('/getEquipKnowledge',step_list).then(res => {
           console.log(res)
           this.step_result = res.data.message["query_result"][0]
+          this.get_my_step_result()
         }).catch(err => {
           console.log(err)
         })
