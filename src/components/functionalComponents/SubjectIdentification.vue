@@ -14,7 +14,6 @@
               <el-row class="my-el-row">
                 <el-col :span="24">
                   <el-card shadow="hover" class="box-card">
-
                     <div class="usecase-style">
                       <el-row type="flex" justify="space-around">
                         <el-col :span="8">

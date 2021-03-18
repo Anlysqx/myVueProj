@@ -21,7 +21,6 @@
         </div>
         <div v-for="(one_step,step_index) in newCaseForm['step_list']">
           <div class="one-step-style">
-<!--            <span>步骤 {{step_index+1}}</span>-->
             <div>
               <el-form-item prop="step" label="步骤描述">
                 <el-input v-model="one_step.step"></el-input>
