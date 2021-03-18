@@ -105,7 +105,7 @@ import {ElMessage} from "element-plus";
       query_server() {
         // 循环向服务器请求查询
         console.log('search btn click')
-        console.log('this.step_result = ',this.step_result)
+        console.log('this.step_list = ',this.step_list)
         // 这里应该直接把所有的query_step_list 传输出去
         get_equip_knowledge_base('/getEquipKnowledge', this.step_list).then(res => {
           console.log(res)

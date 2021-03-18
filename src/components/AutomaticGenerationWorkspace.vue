@@ -111,7 +111,7 @@
               <el-menu-item index="/usecase_search" @click.native="useCaseSearchClick">
                 <template v-slot:title>
                   <i class="el-icon-search"></i>
-                  <span>用例搜索</span>
+                  <span>条例测试</span>
                 </template>
               </el-menu-item>
             </el-submenu>
