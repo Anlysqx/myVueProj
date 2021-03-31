@@ -16,7 +16,7 @@
         >
           <template #prepend>
             <el-select v-model="select" placeholder="请选择">
-              <el-option v-for="(one_file,index) in fileNameList" :label="one_file" :value="index"></el-option>
+              <el-option v-for="(one_file,index) in fileNameList" :label="one_file" :value="one_file"></el-option>
             </el-select>
           </template>
           <template #append>
@@ -36,7 +36,7 @@
 </template>
 
 <script>
-import {get_equip_knowledge_base, getLeftMenuItemListData} from "@/network/network_request";
+import {get_single_test,get_equip_knowledge_base, getLeftMenuItemListData} from "@/network/network_request";
   export default {
     name: "UseCaseSearch",
     data(){
@@ -72,8 +72,12 @@ import {get_equip_knowledge_base, getLeftMenuItemListData} from "@/network/netwo
         // 需要增加search 函数，向服务器请求查询
         console.log('search btn click select = ',this.select)
         console.log(this.queryContent)
-        let step_list = [{"step":this.queryContent}]
-        get_equip_knowledge_base('/getEquipKnowledge',step_list).then(res => {
+        console.log(this.select)
+        let singleTest = {
+          "step":this.queryContent,
+          "knowledge_file":this.select
+        }
+        get_single_test('/getSingleTest',singleTest).then(res => {
           console.log(res)
           this.step_result = res.data.message["query_result"][0]
           this.get_my_step_result()

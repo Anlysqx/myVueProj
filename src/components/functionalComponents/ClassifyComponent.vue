@@ -103,11 +103,14 @@ export default {
   }
   .content-style{
     margin-top: 2%;
+    height: 530px;
+    overflow-y: auto;
   }
   .step_cls_result_style{
+
   }
   .step-cls-style{
-    margin: 3%;
+    margin: 2%;
     :hover{
       cursor: pointer;
     }

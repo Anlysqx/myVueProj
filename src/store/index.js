@@ -2,6 +2,7 @@ import { createStore } from 'vuex'
 
 export default createStore({
   state: {
+    file_name:'test_热控',
     mainSubject:'',
     knowledge_tree:'',
     step_result:'',

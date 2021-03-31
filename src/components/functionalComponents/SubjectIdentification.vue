@@ -107,7 +107,11 @@ import {ElMessage} from "element-plus";
         console.log('search btn click')
         console.log('this.step_list = ',this.step_list)
         // 这里应该直接把所有的query_step_list 传输出去
-        get_equip_knowledge_base('/getEquipKnowledge', this.step_list).then(res => {
+        let query_case = {
+          "step_list":this.step_list,
+          "file_name":this.$store.state.file_name
+        }
+        get_equip_knowledge_base('/getEquipKnowledge', query_case).then(res => {
           console.log(res)
           this.$store.state.step_result = res.data.message["query_result"]
           console.log('this.$store.state.step_result = ',this.$store.state.step_result)
@@ -163,7 +167,8 @@ import {ElMessage} from "element-plus";
   }
   .box-card{
     padding: 1%;
-    height: 100%;
+    height: 400px;
+    overflow-y: auto;
   }
   el-card{
     background-color: #8b9196;

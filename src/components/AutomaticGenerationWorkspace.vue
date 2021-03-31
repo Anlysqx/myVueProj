@@ -220,6 +220,7 @@ export default {
       getLeftMenuItemListData('/leftMenuData').then(res => {
         console.log('leftmenu item data = ',res)
         this.fileNameList = res.data.message.fileList
+        this.$store.state.file_name = this.fileNameList[0]
         this.fromResGetCaseItemList(res)
       }).catch(err => {
         console.log(err)
@@ -229,8 +230,8 @@ export default {
       console.log(event.index)
       console.log(file_index)
       this.saveActivePath(event.index)
-      if (file_index === 0) return
-      console.log('hello')
+      // if (file_index === 0) return
+      this.$store.state.file_name = this.fileNameList[file_index]
       withFileNameGetUsecaseList(this.fileNameList[file_index],'/newFileCaseData').then(res => {
         console.log('根据选择的文件名，请求对应的测试用例列表')
         console.log('新请求到的 usecase data list = ',res)
@@ -247,7 +248,11 @@ export default {
       this.$store.state.toAnalysisCase = tmp_case_item
       // 这里需要进行主体分析和请求得到知识库
       console.log('进行主体分析和请求得到知识库')
-      get_subject_and_tree('/getSubjectAndTree',this.$store.state.toAnalysisCase).then(res => {
+      let case_item_query = {
+        "analysis_case":this.$store.state.toAnalysisCase,
+        "file_name":this.$store.state.file_name
+      }
+      get_subject_and_tree('/getSubjectAndTree',case_item_query).then(res => {
         this.$store.state.knowledge_tree = res.data.message["knowledge_tree"]
         console.log(this.$store.state.knowledge_tree)
         // 得到主体

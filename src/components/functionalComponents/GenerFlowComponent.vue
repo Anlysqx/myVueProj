@@ -136,7 +136,7 @@ export default {
           let tmp_param = now_params[j].param_name
           let tmp_value = now_params[j].param_value
           let tmp_pair = '(' + tmp_param + ',' + tmp_value + ')'
-          if (j > origin_params.length){
+          if (j >= origin_params.length){
             diff_res.push(tmp_diff + ' 添加参数 => ' + tmp_pair)
           }else{
             let tmp_origin_pair =  '(' + origin_params[j].param_name + ',' + origin_params[j].param_value + ')'

@@ -105,7 +105,7 @@ export default {
       this.$store.state.selfWriteCase = this.newCaseForm
       this.$store.state.toAnalysisCase = this.newCaseForm
       console.log('this.$store.state.toAnalysisCase = ',this.$store.state.toAnalysisCase)
-      this.$router.replace('/generation_flow')
+      // this.$router.replace('/subject_identification')
       //当新数据不为空时，将新保存的case数据保存到测试用例用户自定义文件数据库中
       console.log('-----------------')
       console.log(this.newCaseForm.title.func_desc)

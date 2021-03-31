@@ -8,18 +8,29 @@ axios.interceptors.request.use(config => {
     return config
 })
 
-export function get_subject_and_tree(url,usecase){
+
+export function get_single_test(url,singleTest) {
+    // 请求的后端api地址为/getSingleTest
+    return axios.post(url,{
+        singleTest:singleTest
+    })
+
+}
+
+export function get_subject_and_tree(url,case_item_query){
     // 请求的后端api地址为 /getSubjectAndTree
     return axios.post(url,{
-        usecase:usecase
+        usecase:case_item_query["analysis_case"],
+        file_name:case_item_query["file_name"]
     })
 }
 
-export function get_equip_knowledge_base(url,step_list) {
+export function get_equip_knowledge_base(url,query_case) {
     // 请求的后端api地址为 /getEquipKnowledge
-    console.log(step_list)
+    console.log(query_case)
     return axios.post(url,{
-        query:step_list
+        step_list:query_case["step_list"],
+        file_name:query_case["file_name"]
     })
 }
 
